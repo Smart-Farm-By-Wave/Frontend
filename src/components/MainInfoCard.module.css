@@ -1,0 +1,16 @@
+.mainContainer {
+  width: 50%;
+  height: 13.5rem;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media (max-width: 800px) {
+  .mainContainer {
+    width: 80%;
+  }
+}

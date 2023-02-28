@@ -1,0 +1,8 @@
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  width: 3rem;
+}
