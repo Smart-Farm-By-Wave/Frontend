@@ -5,6 +5,8 @@ function MainInfoCard() {
   return (
     <div className={styles.mainContainer}>
       <Info type={'temp'} value={30} />
+      <Info type={'humid'} value={80} />
+      <Info type={'rainfall'} value={80} />
     </div>
   )
 }

@@ -7,9 +7,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  padding: 1.5rem;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .mainContainer {
     width: 80%;
   }
