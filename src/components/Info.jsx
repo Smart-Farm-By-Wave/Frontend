@@ -1,9 +1,15 @@
+import { useState } from 'react'
+
+import GraphModal from './GraphModal'
 import styles from './Info.module.css'
 import tempIcon from '../assets/temp.png'
 import humidIcon from '../assets/humid.png'
-import rainfallIcon from '../assets/humid.png'
+import rainfallIcon from '../assets/rainfall.png'
+import graphIcon from '../assets/graphIcon.png'
 
 function Info({ type, value }) {
+  const [isOpen, setIsOpen] = useState(false)
+
   const typeMatch = (type) => {
     const category = {
       temp: 'Temperature',
@@ -26,9 +32,15 @@ function Info({ type, value }) {
       <div>{typeMatch(type)}</div>
       <div>
         {value}
-        <span>°C</span>
+        <span>{type === 'temp' ? '°C' : '%'}</span>
       </div>
-      <div>View Graph</div>
+      <div className={styles.graphButton} onClick={() => setIsOpen(true)}>
+        <span>
+          <img src={graphIcon} className={styles.graphIcon} />
+        </span>
+        View Graph
+      </div>
+      <GraphModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />
     </div>
   )
 }
