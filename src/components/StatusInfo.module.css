@@ -2,21 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 50%;
 }
 
 .statusIcon {
-  width: 40%;
+  width: 30%;
   margin: 1.5rem;
 }
 
 .statusText {
   font-weight: 500;
   margin: 0.5rem;
+  text-align: center;
 }
 
 .statusDesc {
   text-align: center;
   font-size: 80%;
   color: #868e96;
+}
+
+.alertText {
+  color: #fa5252;
 }
