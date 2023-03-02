@@ -1,0 +1,35 @@
+.graphContainer {
+  margin: 2% 5% 3% 5%;
+}
+
+.graphName {
+  font-weight: 500;
+  font-size: 150%;
+  width: 100%;
+}
+
+.header {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+}
+
+.rangeButton {
+  width: 6rem;
+  text-align: center;
+  margin: 0 2%;
+  padding: 1% 2%;
+  color: #2f9e44;
+  background-color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.rangeButton:hover {
+  background-color: #ebfbee;
+}

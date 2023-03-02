@@ -1,0 +1,22 @@
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50%;
+}
+
+.statusIcon {
+  width: 40%;
+  margin: 1.5rem;
+}
+
+.statusText {
+  font-weight: 500;
+  margin: 0.5rem;
+}
+
+.statusDesc {
+  text-align: center;
+  font-size: 80%;
+  color: #868e96;
+}

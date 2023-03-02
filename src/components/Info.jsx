@@ -30,9 +30,9 @@ function Info({ type, value }) {
     <div className={styles.infoContainer}>
       <img src={iconMatch(type)} className={styles.icon} />
       <div>{typeMatch(type)}</div>
-      <div>
+      <div className={styles.value}>
         {value}
-        <span>{type === 'temp' ? '°C' : '%'}</span>
+        <span className={styles.unit}>{type === 'temp' ? '°C' : '%'}</span>
       </div>
       <div className={styles.graphButton} onClick={() => setIsOpen(true)}>
         <span>
@@ -40,7 +40,11 @@ function Info({ type, value }) {
         </span>
         View Graph
       </div>
-      <GraphModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />
+      <GraphModal
+        graphName={`${typeMatch(type)} Graph`}
+        isOpenModal={isOpen}
+        setIsOpenModal={setIsOpen}
+      />
     </div>
   )
 }

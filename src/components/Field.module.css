@@ -1,17 +1,30 @@
-.infoContainer {
+.fieldContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  height: 100%;
+  justify-content: space-between;
+  padding: 8%;
   font-weight: 500;
+  height: 100%;
+}
+
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .icon {
-  width: 3rem;
+  width: 25%;
+  margin: 3%;
+}
+
+.plantName {
+  padding: 0;
 }
 
 .graphButton {
+  font-size: 80%;
   color: #37b24d;
 }
 
@@ -23,6 +36,10 @@
 .graphIcon {
   width: 1rem;
   margin-right: 0.5rem;
+}
+
+.label {
+  font-size: 80%;
 }
 
 .value {

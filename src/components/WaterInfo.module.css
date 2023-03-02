@@ -1,0 +1,26 @@
+.waterInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+}
+
+.waterIcon {
+  width: 40%;
+  margin: 1.5rem;
+}
+
+.waterText {
+  font-weight: 500;
+  margin: 0.5rem;
+}
+
+.waterPercent {
+  font-weight: 500;
+  font-size: 150%;
+}
+
+.percent {
+  font-size: 80%;
+}
