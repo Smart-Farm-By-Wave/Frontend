@@ -8,12 +8,12 @@ function Field({ plantName, moisture }) {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div className={styles.fieldContainer}>
-      <div className={styles.plantName}>Strawberry</div>
+      <div className={styles.plantName}>{plantName}</div>
       <img src={strawberryPic} className={styles.icon} />
       <div className={styles.subContainer}>
         <div className={styles.label}>Soil Moisture</div>
         <div className={styles.value}>
-          80
+          {moisture}
           <span className={styles.unit}>%</span>
         </div>
       </div>
@@ -23,7 +23,11 @@ function Field({ plantName, moisture }) {
         </span>
         View Graph
       </div>
-      <GraphModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />
+      <GraphModal
+        isOpenModal={isOpen}
+        setIsOpenModal={setIsOpen}
+        graphName={`${plantName}'s Moisture Graph`}
+      />
     </div>
   )
 }
