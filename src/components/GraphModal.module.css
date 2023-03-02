@@ -33,3 +33,15 @@
 .rangeButton:hover {
   background-color: #ebfbee;
 }
+
+.currentButton {
+  width: 6rem;
+  text-align: center;
+  margin: 0 2%;
+  padding: 1% 2%;
+  color: #2f9e44;
+  background-color: #ebfbee;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}

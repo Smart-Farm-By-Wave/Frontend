@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import { useState } from 'react'
 
 ChartJS.register(
   CategoryScale,
@@ -23,6 +24,12 @@ ChartJS.register(
 )
 
 function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
+  const [buttonState, setButtonState] = useState({
+    button1: false,
+    button2: true,
+    button3: false,
+  })
+
   const options = {
     responsive: true,
     plugins: {
@@ -68,9 +75,36 @@ function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
           <Line options={options} data={data} />
         </div>
         <div className={styles.buttonGroup}>
-          <div className={styles.rangeButton}>1 hour</div>
-          <div className={styles.rangeButton}>1 day</div>
-          <div className={styles.rangeButton}>1 week</div>
+          <div
+            className={
+              buttonState.button1 ? styles.currentButton : styles.rangeButton
+            }
+            onClick={() =>
+              setButtonState({ button1: true, button2: false, button3: false })
+            }
+          >
+            1 hour
+          </div>
+          <div
+            className={
+              buttonState.button2 ? styles.currentButton : styles.rangeButton
+            }
+            onClick={() =>
+              setButtonState({ button1: false, button2: true, button3: false })
+            }
+          >
+            1 day
+          </div>
+          <div
+            className={
+              buttonState.button3 ? styles.currentButton : styles.rangeButton
+            }
+            onClick={() =>
+              setButtonState({ button1: false, button2: false, button3: true })
+            }
+          >
+            1 week
+          </div>
         </div>
       </ModalBody>
     </Modal>
