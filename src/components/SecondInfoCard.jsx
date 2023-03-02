@@ -5,7 +5,7 @@ import WaterInfo from './WaterInfo'
 function SecondInfoCard() {
   return (
     <div className={styles.mainContainer}>
-      <StatusInfo />
+      <StatusInfo flameStatus={false} gasStatus={false} />
       <WaterInfo percent={80} />
     </div>
   )
