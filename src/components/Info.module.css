@@ -32,3 +32,12 @@
 .unit {
   font-size: 80%;
 }
+
+@media (max-width: 800px) {
+  .infoContainer {
+    font-size: 70%;
+  }
+  .graphIcon {
+    width: 0.75rem;
+  }
+}

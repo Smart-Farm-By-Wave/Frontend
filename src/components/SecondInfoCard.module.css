@@ -8,3 +8,12 @@
   padding: 1.5rem;
   grid-area: sub;
 }
+
+@media (max-width: 800px) {
+  .mainContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 80%;
+    margin-bottom: 5%;
+  }
+}

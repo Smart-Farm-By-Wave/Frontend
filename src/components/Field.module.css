@@ -95,3 +95,12 @@
   font-size: 60%;
   color: #868e96;
 }
+
+@media (max-width: 800px) {
+  .fieldContainer {
+    font-size: 70%;
+  }
+  .graphIcon {
+    width: 0.75rem;
+  }
+}

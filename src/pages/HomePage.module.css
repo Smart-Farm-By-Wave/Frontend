@@ -8,7 +8,7 @@
   display: grid;
   width: 60%;
   grid-template-rows: 15rem 35rem;
-  grid-template-columns: 25% 1fr;
+  grid-template-columns: 30% 1fr;
   grid-template-areas:
     'main main'
     'sub field';
@@ -25,8 +25,8 @@
 
 @media (max-width: 800px) {
   .dashboard {
-    width: 100%;
-    grid-template-rows: 13rem 30rem;
-    grid-template-columns: 30% 1fr;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
   }
 }

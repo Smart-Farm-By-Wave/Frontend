@@ -24,3 +24,12 @@
 .percent {
   font-size: 80%;
 }
+
+@media (max-width: 800px) {
+  .waterText {
+    margin: 0;
+  }
+  .waterIcon {
+    margin: 1.8rem;
+  }
+}
