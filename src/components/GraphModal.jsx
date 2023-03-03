@@ -29,6 +29,8 @@ function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
     button2: true,
     button3: false,
   })
+  const [labels, setLabels] = useState([])
+  const [graphData, setGraphData] = useState([])
 
   const options = {
     responsive: true,
@@ -36,26 +38,22 @@ function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
       legend: {
         position: 'top',
       },
-      // title: {
-      //   display: true,
-      //   text: 'Chart.js Line Chart',
-      // },
     },
   }
-
-  const labels = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Dataset 1',
-        data: [2, 3, 4, 5, 6, 10, 50],
+        data: graphData,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
   }
+
+  const handleChangeRange = (range) => {}
 
   return (
     <Modal

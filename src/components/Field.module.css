@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 8%;
+  padding: 8% 0;
   font-weight: 500;
   height: 100%;
 }
@@ -20,7 +20,7 @@
 }
 
 .plantName {
-  padding: 0;
+  font-size: 90%;
 }
 
 .graphButton {
@@ -39,7 +39,7 @@
 }
 
 .label {
-  font-size: 100%;
+  font-size: 90%;
 }
 
 .value {
@@ -48,4 +48,50 @@
 
 .unit {
   font-size: 80%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 3%;
+  width: 10%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  transition: 0.25s;
+}
+
+.edit {
+  background-color: #f8f9fa;
+}
+
+.edit:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+.delete {
+  background-color: #fff5f5;
+}
+
+.delete:hover {
+  background-color: #ffc9c9;
+  cursor: pointer;
+}
+
+.buttonIcon {
+  width: 50%;
+  height: 50%;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.ownerName {
+  font-size: 60%;
+  color: #868e96;
 }

@@ -18,7 +18,7 @@
 @media (max-width: 1200px) {
   .dashboard {
     width: 70%;
-    grid-template-rows: 12rem 30rem;
+    grid-template-rows: 14rem 30rem;
     grid-template-columns: 30% 1fr;
   }
 }
