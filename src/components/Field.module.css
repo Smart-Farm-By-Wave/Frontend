@@ -92,8 +92,36 @@
 }
 
 .ownerName {
-  font-size: 60%;
+  font-size: 80%;
   color: #868e96;
+}
+
+.addIcon {
+  width: 70%;
+  height: 70%;
+}
+
+.addButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-color: #40c057;
+}
+
+.addButton:hover {
+  background-color: #2f9e44;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.blankContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 @media (max-width: 800px) {

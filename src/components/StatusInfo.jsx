@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react'
+
+import { getData } from '../fetchData'
+
 import happyIcon from '../assets/happy.png'
 import fireIcon from '../assets/fire.png'
 import styles from './StatusInfo.module.css'
 import classNames from 'classnames'
 
-function StatusInfo({ gasStatus, flameStatus }) {
-  if (flameStatus && gasStatus) {
+function StatusInfo() {
+  const [statusInfo, setStatusInfo] = useState({ smoke: false, fire: false })
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getData('/central/fire', setStatusInfo)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  if (statusInfo.fire && statusInfo.smoke) {
     return (
       <div className={styles.statusContainer}>
         <img src={fireIcon} className={styles.statusIcon} />
@@ -13,7 +25,7 @@ function StatusInfo({ gasStatus, flameStatus }) {
         </div>
       </div>
     )
-  } else if (flameStatus) {
+  } else if (statusInfo.fire) {
     return (
       <div className={styles.statusContainer}>
         <img src={fireIcon} className={styles.statusIcon} />
@@ -22,7 +34,7 @@ function StatusInfo({ gasStatus, flameStatus }) {
         </div>
       </div>
     )
-  } else if (gasStatus) {
+  } else if (statusInfo.smoke) {
     return (
       <div className={styles.statusContainer}>
         <img src={fireIcon} className={styles.statusIcon} />

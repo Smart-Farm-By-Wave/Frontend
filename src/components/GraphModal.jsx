@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
-import styles from './GraphModal.module.css'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,7 +13,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { useState } from 'react'
+import styles from './GraphModal.module.css'
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +25,31 @@ ChartJS.register(
   Legend
 )
 
-function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
+const createRequestPath = (dataType, buttonState, field) => {
+  let time
+  if (buttonState.button1) {
+    time = 'hour'
+  } else if (buttonState.button2) {
+    time = 'day'
+  } else {
+    time = 'week'
+  }
+  let requestPath
+  if (field) {
+    requestPath = `/graph?data=${dataType}&time=${time}&field=${field}`
+  } else {
+    requestPath = `/graph?data=${dataType}&time=${time}`
+  }
+  return requestPath
+}
+
+function GraphModal({
+  dataType,
+  fieldNumber,
+  graphName,
+  isOpenModal,
+  setIsOpenModal,
+}) {
   const [buttonState, setButtonState] = useState({
     button1: false,
     button2: true,
@@ -31,6 +57,27 @@ function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
   })
   const [labels, setLabels] = useState([])
   const [graphData, setGraphData] = useState([])
+
+  useEffect(() => {
+    const getData = async (dataType, buttonState, fieldNumber) => {
+      try {
+        const response = await axios.get(
+          'http://localhost:3000/api' +
+            createRequestPath(dataType, buttonState, fieldNumber)
+        )
+        setLabels(response.data.data.time)
+        setGraphData(response.data.data.data)
+        // console.log(response.data.time)
+        console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    // const interval = setInterval(() => {
+    getData(dataType, buttonState, fieldNumber)
+    // }, 1000)
+    // return () => clearInterval(interval)
+  }, [buttonState])
 
   const options = {
     responsive: true,
@@ -52,8 +99,6 @@ function GraphModal({ graphName, isOpenModal, setIsOpenModal }) {
       },
     ],
   }
-
-  const handleChangeRange = (range) => {}
 
   return (
     <Modal

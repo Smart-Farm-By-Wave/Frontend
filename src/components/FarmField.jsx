@@ -5,15 +5,15 @@ function FarmField() {
   return (
     <div className={styles.fieldContainer}>
       <div className={styles.field1}>
-        <Field plantName={'cabbage'} moisture={80} byWho={'Peeranat'} />
+        <Field number={1} />
       </div>
       <div className={styles.field2}>
-        <Field plantName={'spinach'} moisture={80} />
+        <Field number={2} />
       </div>
       <div className={styles.field3}>
-        <Field plantName={'bean'} moisture={80} />
+        <Field number={3} />
       </div>
-      <Field plantName={'basil'} moisture={80} />
+      <Field number={4} />
     </div>
   )
 }

@@ -1,8 +1,9 @@
 // Library
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import axios from 'axios'
 
 // CSS
 import styles from './Field.module.css'
@@ -19,6 +20,8 @@ import cabbagePic from '../assets/cabbage.png'
 import spinachPic from '../assets/spinach.png'
 import deleteIcon from '../assets/delete.png'
 import editIcon from '../assets/edit.png'
+import addIcon from '../assets/add.png'
+import CreateFieldModal from './CreateFieldModal'
 
 const matchPlant = (plantName, type) => {
   const plantPic = {
@@ -40,14 +43,25 @@ const matchPlant = (plantName, type) => {
 
 const MySwal = withReactContent(Swal)
 
-const handleEditName = () => {
+const handleEditName = (currentName, num) => {
   MySwal.fire({
     title: 'Change owner name',
     input: 'text',
     inputLabel: 'Owner name',
-    // inputValue: inputValue,
+    inputValue: currentName,
     confirmButtonText: 'Save changes',
     showCancelButton: true,
+    showLoaderOnConfirm: true,
+    preConfirm: (name) => {
+      try {
+        const response = axios.put(
+          `http://localhost:3000/api/field/update/${num}`,
+          { byWho: name }
+        )
+      } catch (error) {
+        console.error(error)
+      }
+    },
     inputValidator: (value) => {
       if (!value) {
         return "Owner name can't be left blank!"
@@ -65,13 +79,23 @@ const handleEditName = () => {
   })
 }
 
-const handleDeleteField = () => {
+const handleDeleteField = (num) => {
   MySwal.fire({
     title: 'Do you want to delete this field?',
     icon: 'question',
     confirmButtonText: 'Delete',
     confirmButtonColor: '#fa5252',
     showCancelButton: true,
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      try {
+        const response = axios.put(
+          `http://localhost:3000/api/field/remove/${num}`
+        )
+      } catch (error) {
+        console.error(error)
+      }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       return MySwal.fire({
@@ -83,47 +107,107 @@ const handleDeleteField = () => {
   })
 }
 
-function Field({ isUsing, plantName, byWho, moisture }) {
+function Field({ number }) {
   const [isOpen, setIsOpen] = useState(false)
-  return (
-    <div className={styles.fieldContainer}>
-      <div className={styles.headerContainer}>
-        <div className={styles.plantName}>{matchPlant(plantName)}</div>
+  const [isOpenModalCreate, setIsOpenModalCreate] = useState(false)
+  const [soilMoisture, setSoilMoisture] = useState({ moisture: 0 })
+  const [fieldInfo, setFieldInfo] = useState({
+    isUsing: false,
+    plantName: '',
+    byWho: '',
+  })
+  useEffect(() => {
+    const getData = async (num) => {
+      try {
+        const res1 = await axios.get(
+          `http://localhost:3000/api/field/detail/${num}`
+        )
+        setFieldInfo(res1.data)
+        if (res1.data.isUsing) {
+          try {
+            const res2 = await axios.get(
+              `http://localhost:3000/api/field/moisture/${num}`
+            )
+            setSoilMoisture(res2.data)
+          } catch (error) {
+            console.error(error)
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    const interval = setInterval(() => {
+      getData(number)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  if (fieldInfo.isUsing) {
+    return (
+      <div className={styles.fieldContainer}>
+        <div className={styles.headerContainer}>
+          <div className={styles.plantName}>
+            {matchPlant(fieldInfo.plantName)}
+          </div>
+          <div
+            className={classNames(styles.button, styles.edit)}
+            onClick={() => handleEditName(fieldInfo.byWho, number)}
+          >
+            <img src={editIcon} className={styles.buttonIcon} />
+          </div>
+          <div
+            className={classNames(styles.button, styles.delete)}
+            onClick={() => handleDeleteField(number)}
+          >
+            <img src={deleteIcon} className={styles.buttonIcon} />
+          </div>
+        </div>
+        <div className={styles.ownerName}>by {fieldInfo.byWho}</div>
+        <img
+          src={matchPlant(fieldInfo.plantName, 'pic')}
+          className={styles.icon}
+        />
+        <div className={styles.subContainer}>
+          <div className={styles.label}>Soil Moisture</div>
+          <div className={styles.value}>
+            {Math.round(soilMoisture.moisture)}
+            <span className={styles.unit}>%</span>
+          </div>
+        </div>
+        <div className={styles.graphButton} onClick={() => setIsOpen(true)}>
+          <span>
+            <img src={graphIcon} className={styles.graphIcon} />
+          </span>
+          View Graph
+        </div>
+        <GraphModal
+          dataType={'soilMoisture'}
+          fieldNumber={number}
+          isOpenModal={isOpen}
+          setIsOpenModal={setIsOpen}
+          graphName={`${matchPlant(fieldInfo.plantName)}'s Soil Moisture Graph`}
+        />
+      </div>
+    )
+  } else {
+    return (
+      <div className={styles.blankContainer}>
         <div
-          className={classNames(styles.button, styles.edit)}
-          onClick={handleEditName}
+          className={styles.addButton}
+          onClick={() => setIsOpenModalCreate(true)}
         >
-          <img src={editIcon} className={styles.buttonIcon} />
+          <img src={addIcon} className={styles.addIcon} />
         </div>
-        <div
-          className={classNames(styles.button, styles.delete)}
-          onClick={handleDeleteField}
-        >
-          <img src={deleteIcon} className={styles.buttonIcon} />
-        </div>
+        <CreateFieldModal
+          number={number}
+          isOpenModal={isOpenModalCreate}
+          setIsOpenModal={setIsOpenModalCreate}
+        />
       </div>
-      <div className={styles.ownerName}>by {byWho}</div>
-      <img src={matchPlant(plantName, 'pic')} className={styles.icon} />
-      <div className={styles.subContainer}>
-        <div className={styles.label}>Soil Moisture</div>
-        <div className={styles.value}>
-          {moisture}
-          <span className={styles.unit}>%</span>
-        </div>
-      </div>
-      <div className={styles.graphButton} onClick={() => setIsOpen(true)}>
-        <span>
-          <img src={graphIcon} className={styles.graphIcon} />
-        </span>
-        View Graph
-      </div>
-      <GraphModal
-        isOpenModal={isOpen}
-        setIsOpenModal={setIsOpen}
-        graphName={`${plantName}'s Moisture Graph`}
-      />
-    </div>
-  )
+    )
+  }
 }
 
 export default Field

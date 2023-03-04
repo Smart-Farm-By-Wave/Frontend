@@ -13,7 +13,7 @@ function Info({ type, value }) {
   const typeMatch = (type) => {
     const category = {
       temp: 'Temperature',
-      humid: 'Air Humidity',
+      humidity: 'Air Humidity',
       rainfall: 'Rainfall',
     }
     return category[type]
@@ -21,7 +21,7 @@ function Info({ type, value }) {
   const iconMatch = (type) => {
     const icon = {
       temp: tempIcon,
-      humid: humidIcon,
+      humidity: humidIcon,
       rainfall: rainfallIcon,
     }
     return icon[type]
@@ -41,6 +41,7 @@ function Info({ type, value }) {
         View Graph
       </div>
       <GraphModal
+        dataType={type}
         graphName={`${typeMatch(type)} Graph`}
         isOpenModal={isOpen}
         setIsOpenModal={setIsOpen}
