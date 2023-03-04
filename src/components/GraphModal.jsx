@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, Spinner } from 'reactstrap'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,6 +50,7 @@ function GraphModal({
   isOpenModal,
   setIsOpenModal,
 }) {
+  const [isLoading, setIsLoading] = useState(true)
   const [buttonState, setButtonState] = useState({
     button1: false,
     button2: true,
@@ -61,6 +62,8 @@ function GraphModal({
   useEffect(() => {
     const getData = async (dataType, buttonState, fieldNumber) => {
       try {
+        setIsLoading(true)
+        console.log(createRequestPath(dataType, buttonState, fieldNumber))
         const response = await axios.get(
           'http://localhost:3000/api' +
             createRequestPath(dataType, buttonState, fieldNumber)
@@ -68,13 +71,16 @@ function GraphModal({
         setLabels(response.data.data.time)
         setGraphData(response.data.data.data)
         // console.log(response.data.time)
-        console.log(response)
+        console.log(response.data.data)
+        setIsLoading(false)
       } catch (error) {
         console.error(error)
       }
     }
     // const interval = setInterval(() => {
+
     getData(dataType, buttonState, fieldNumber)
+
     // }, 1000)
     // return () => clearInterval(interval)
   }, [buttonState])
@@ -115,7 +121,11 @@ function GraphModal({
       </ModalHeader>
       <ModalBody>
         <div className={styles.graphContainer}>
-          <Line options={options} data={data} />
+          {isLoading ? (
+            <Spinner color={'success'} />
+          ) : (
+            <Line options={options} data={data} />
+          )}
         </div>
         <div className={styles.buttonGroup}>
           <div
@@ -123,7 +133,11 @@ function GraphModal({
               buttonState.button1 ? styles.currentButton : styles.rangeButton
             }
             onClick={() =>
-              setButtonState({ button1: true, button2: false, button3: false })
+              setButtonState({
+                button1: true,
+                button2: false,
+                button3: false,
+              })
             }
           >
             1 hour
@@ -133,7 +147,11 @@ function GraphModal({
               buttonState.button2 ? styles.currentButton : styles.rangeButton
             }
             onClick={() =>
-              setButtonState({ button1: false, button2: true, button3: false })
+              setButtonState({
+                button1: false,
+                button2: true,
+                button3: false,
+              })
             }
           >
             1 day
@@ -143,7 +161,11 @@ function GraphModal({
               buttonState.button3 ? styles.currentButton : styles.rangeButton
             }
             onClick={() =>
-              setButtonState({ button1: false, button2: false, button3: true })
+              setButtonState({
+                button1: false,
+                button2: false,
+                button3: true,
+              })
             }
           >
             1 week
