@@ -2,8 +2,6 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-import { putData } from '../fetchData'
-
 import styles from './CreateFieldModal.module.css'
 import {
   Button,
@@ -13,19 +11,16 @@ import {
   ModalFooter,
   Input,
   Form,
+  Spinner,
 } from 'reactstrap'
+
+import { putData } from '../fetchData'
 
 const MySwal = withReactContent(Swal)
 
-const handleSubmit = (e, toggle, data, number) => {
+const handleSubmit = (e, toggle, data, number, setIsLoading) => {
   e.preventDefault()
-  toggle()
-  putData(`/field/create/${number}`, data)
-  MySwal.fire({
-    title: 'Success',
-    text: 'This field has been added!',
-    icon: 'success',
-  })
+  putData(`/field/create/${number}`, data, setIsLoading, toggle)
 }
 
 function CreateFieldModal({ number, isOpenModal, setIsOpenModal }) {
@@ -33,13 +28,18 @@ function CreateFieldModal({ number, isOpenModal, setIsOpenModal }) {
     plantName: '',
     byWho: '',
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const toggle = () => setIsOpenModal(!isOpenModal)
 
   return (
     <Modal isOpen={isOpenModal} toggle={toggle} centered={true}>
       <ModalHeader toggle={toggle}>Add Field</ModalHeader>
-      <Form onSubmit={(e) => handleSubmit(e, toggle, fieldData, number)}>
+      <Form
+        onSubmit={(e) =>
+          handleSubmit(e, toggle, fieldData, number, setIsLoading)
+        }
+      >
         <ModalBody>
           <div className={styles.label}>Plant</div>
           <Input
@@ -70,9 +70,16 @@ function CreateFieldModal({ number, isOpenModal, setIsOpenModal }) {
           />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" type="submit">
-            Add
-          </Button>{' '}
+          {isLoading ? (
+            <Button color="primary" type="submit" disabled>
+              <Spinner size="sm" />
+              <span> Adding...</span>
+            </Button>
+          ) : (
+            <Button color="primary" type="submit">
+              Add
+            </Button>
+          )}{' '}
           <Button color="secondary" onClick={toggle}>
             Cancel
           </Button>

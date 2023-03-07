@@ -83,7 +83,7 @@ function GraphModal({
 
     // }, 1000)
     // return () => clearInterval(interval)
-  }, [buttonState])
+  }, [buttonState, isOpenModal])
 
   const options = {
     responsive: true,

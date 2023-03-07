@@ -52,9 +52,9 @@ const handleEditName = (currentName, num) => {
     confirmButtonText: 'Save changes',
     showCancelButton: true,
     showLoaderOnConfirm: true,
-    preConfirm: (name) => {
+    preConfirm: async (name) => {
       try {
-        const response = axios.put(
+        const response = await axios.put(
           `http://localhost:3000/api/field/update/${num}`,
           { byWho: name }
         )
@@ -65,6 +65,9 @@ const handleEditName = (currentName, num) => {
     inputValidator: (value) => {
       if (!value) {
         return "Owner name can't be left blank!"
+      }
+      if (value.length > 10) {
+        return 'Owner name must be 10 characters or less!'
       }
     },
   }).then((result) => {
@@ -87,9 +90,9 @@ const handleDeleteField = (num) => {
     confirmButtonColor: '#fa5252',
     showCancelButton: true,
     showLoaderOnConfirm: true,
-    preConfirm: () => {
+    preConfirm: async () => {
       try {
-        const response = axios.put(
+        const response = await axios.put(
           `http://localhost:3000/api/field/remove/${num}`
         )
       } catch (error) {
