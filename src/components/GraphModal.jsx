@@ -63,7 +63,7 @@ function GraphModal({
     const getData = async (dataType, buttonState, fieldNumber) => {
       try {
         setIsLoading(true)
-        console.log(createRequestPath(dataType, buttonState, fieldNumber))
+        // console.log(createRequestPath(dataType, buttonState, fieldNumber))
         const response = await axios.get(
           'http://localhost:3000/api' +
             createRequestPath(dataType, buttonState, fieldNumber)
@@ -71,7 +71,7 @@ function GraphModal({
         setLabels(response.data.data.time)
         setGraphData(response.data.data.data)
         // console.log(response.data.time)
-        console.log(response.data.data)
+        // console.log(response.data.data)
         setIsLoading(false)
       } catch (error) {
         console.error(error)
