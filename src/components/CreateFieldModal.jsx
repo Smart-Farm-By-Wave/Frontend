@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import axios from 'axios'
 
 import styles from './CreateFieldModal.module.css'
 import {
@@ -14,13 +15,27 @@ import {
   Spinner,
 } from 'reactstrap'
 
-import { putData } from '../fetchData'
-
 const MySwal = withReactContent(Swal)
 
-const handleSubmit = (e, toggle, data, number, setIsLoading) => {
+const handleSubmit = async (e, toggle, data, number, setIsLoading) => {
   e.preventDefault()
-  putData(`/field/create/${number}`, data, setIsLoading, toggle)
+  try {
+    setIsLoading(true)
+    const response = await axios.put(
+      `http://localhost:3000/api/field/create/${number}`,
+      data
+    )
+    console.log(response)
+    MySwal.fire({
+      title: 'Success',
+      text: 'Your field has been created',
+      icon: 'success',
+    })
+    setIsLoading(false)
+    toggle()
+  } catch (error) {
+    console.error(error.message)
+  }
 }
 
 function CreateFieldModal({ number, isOpenModal, setIsOpenModal }) {
@@ -66,6 +81,7 @@ function CreateFieldModal({ number, isOpenModal, setIsOpenModal }) {
             onChange={(e) => {
               setFieldData({ ...fieldData, byWho: e.target.value })
             }}
+            maxLength={15}
             required
           />
         </ModalBody>

@@ -66,8 +66,8 @@ const handleEditName = (currentName, num) => {
       if (!value) {
         return "Owner name can't be left blank!"
       }
-      if (value.length > 10) {
-        return 'Owner name must be 10 characters or less!'
+      if (value.length > 15) {
+        return 'Owner name must be 15 characters or less!'
       }
     },
   }).then((result) => {
