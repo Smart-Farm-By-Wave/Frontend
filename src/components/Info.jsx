@@ -32,7 +32,9 @@ function Info({ type, value }) {
       <div>{typeMatch(type)}</div>
       <div className={styles.value}>
         {value}
-        <span className={styles.unit}>{type === 'temp' ? '°C' : '%'}</span>
+        <span className={styles.unit}>
+          {type === 'temp' ? '°C' : type === 'humidity' ? '%' : ' cm'}
+        </span>
       </div>
       <div className={styles.graphButton} onClick={() => setIsOpen(true)}>
         <span>
